@@ -53,7 +53,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
 
   return (
     <div className="entry-form">
-      <h4>Add Tokens</h4>
+      <h4>Deposit cTokens</h4>
       <Input
         fluid
         placeholder="Amount"
