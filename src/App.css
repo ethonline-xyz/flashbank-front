@@ -123,6 +123,13 @@ label {
   flex-direction: column;
 }
 
+.refresh {
+  background: var(--theme-gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .stat-title {
   color: var(--theme-black);
   display: flex;

@@ -19,28 +19,35 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
   const [value, setValue] = useState<string>("");
 
   const handleSubmit = () => {
-    let token = selectedToken
+    let token = selectedToken;
     if (!token) return Swal.fire("err...", "Please select token", "warning");
     if (!value) return Swal.fire("err...", "Please enter a value", "warning");
-      var contractInstance = new web3.eth.Contract(
-        cERC20PoolABI,
-        AddressOfContract.ctokenPools[token.toLowerCase()]
-      );
-      let valueInWei = String((Number(value) * 10 ** 8).toFixed(0))
-      contractInstance.methods
-        .deposit(valueInWei)
-        .send({
-          from: account
-        })
-        .on("transactionHash", function (hash) {
-          // TODO: can etherscan or hash can be link in the modal?
-          Swal.fire("Tx pending", `https://kovan.etherscan.io/tx/${hash}`, "success"); // TODO: Here it should be status as in the modal pending
-          setValue("");
-        })
-        .on('receipt', function(receipt){
-          Swal.fire("Tx Confimred", `https://kovan.etherscan.io/tx/${receipt.transactionHash}`, "success"); /// TODO: and whenever it comes here it should update to `transaction confirmed` with status as success 
-        })
-
+    var contractInstance = new web3.eth.Contract(
+      cERC20PoolABI,
+      AddressOfContract.ctokenPools[token.toLowerCase()]
+    );
+    let valueInWei = String((Number(value) * 10 ** 8).toFixed(0));
+    contractInstance.methods
+      .deposit(valueInWei)
+      .send({
+        from: account,
+      })
+      .on("transactionHash", function (hash) {
+        // TODO: can etherscan or hash can be link in the modal?
+        Swal.fire(
+          "Tx pending",
+          `https://kovan.etherscan.io/tx/${hash}`,
+          "success"
+        ); // TODO: Here it should be status as in the modal pending
+        setValue("");
+      })
+      .on("receipt", function (receipt) {
+        Swal.fire(
+          "Tx Confimred",
+          `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
+          "success"
+        ); /// TODO: and whenever it comes here it should update to `transaction confirmed` with status as success
+      });
   };
 
   return (
