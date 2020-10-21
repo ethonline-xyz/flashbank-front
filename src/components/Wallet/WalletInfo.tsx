@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import React, { useEffect } from "react";
 import Web3 from "web3";
 import Web3Modal from "web3modal";
 
 // hooks and services
+import { useStoreActions, useStoreState } from "../../store/globalStore";
 
 // components, styles and UI
+import { Button } from "semantic-ui-react";
 
 // interfaces
 export interface WalletInfoProps {}
 
 const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
+  const { setAccount, setNetwork, setWeb3, setConnected } = useStoreActions(
+    (actions) => actions
+  );
+
+  const { web3, account, network, connected } = useStoreState((state) => state);
+
   const providerOptions = {};
   const web3Modal = new Web3Modal({
-    cacheProvider: true, // optional
-    providerOptions, // required
+    cacheProvider: true,
+    providerOptions,
   });
-
-  const [account, setAccount] = useState("connect to an ethereum wallet");
-  const [web3, setWeb3] = useState(null);
-  const [networkId, setNetworkId] = useState("");
-  const [connected, setConnected] = useState(false);
 
   const resetApp = async () => {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
       await web3.currentProvider.close();
     }
     await web3Modal.clearCachedProvider();
-    setAccount("connect to an ethereum wallet");
+    setAccount("");
     setWeb3(null);
-    setNetworkId("");
+    setNetwork("");
     setConnected(false);
   };
 
@@ -48,15 +50,14 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
     const provider = await web3Modal.connect();
     await subscribeProvider(provider);
     const web3: any = new Web3(provider);
-    console.log(web3);
 
     const accounts = await web3.eth.getAccounts();
     const address = accounts[0];
-    const networkId = await web3.eth.net.getNetworkType();
+    const network = await web3.eth.net.getNetworkType();
 
     await setWeb3(web3);
     await setAccount(address);
-    await setNetworkId("ethereum " + networkId);
+    await setNetwork("ethereum " + network);
     await setConnected(true);
   };
 
@@ -69,8 +70,10 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
   return (
     <div className="wallet-connect">
       <div>
-        <div className="wallet-network">{networkId}</div>
-        <div className="wallet-address">{account}</div>
+        <div className="wallet-network">{network}</div>
+        <div className="wallet-address">
+          {account || "connect to ethereum wallet"}
+        </div>
       </div>
       <Button
         onClick={connected ? resetApp : onConnect}
