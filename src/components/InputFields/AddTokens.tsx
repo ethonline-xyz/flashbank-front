@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import cERC20PoolABI from "../cERC20Pool.json";
+// import flashLoadModuleABI from "../flashLoadModule.json";
 
 // hooks and services
 import { useStoreState } from "../../store/globalStore";
+import { AddressOfContract } from "../addresses";
+import Swal from "sweetalert2";
 
 // components, styles and UI
 import { Button, Input } from "semantic-ui-react";
@@ -16,11 +20,21 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
 
   const handleSubmit = () => {
     if (value) {
-      // make changes here for deposit
-      console.log(value);
+      var contractInstance = new web3.eth.Contract(
+        cERC20PoolABI,
+        AddressOfContract
+      );
+      contractInstance.methods
+        .deposit(value)
+        .send()
+        .on("transactionHash", function (hash) {
+          Swal.fire("Txn Successfull", hash, "success");
+          // Swal.fire("Oops...", "Txn Failed, try again", "error"); // use if fail
+        });
+
       setValue("");
     } else {
-      alert("please enter valid value");
+      Swal.fire("err...", "Please enter a value", "warning");
     }
   };
 

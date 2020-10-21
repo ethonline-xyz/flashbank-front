@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+// import cERC20PoolABI from "../cERC20Pool.json";
+// import flashLoadModuleABI from "../flashLoadModule.json";
 
 // hooks and services
 import { useStoreState } from "../../store/globalStore";
 
 // components, styles and UI
 import { Button, Input } from "semantic-ui-react";
+import Swal from "sweetalert2";
 
 // interfaces
 export interface AddUnderlyingTokensProps {}
@@ -20,7 +23,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       console.log(value);
       setValue("");
     } else {
-      alert("please enter valid value");
+      Swal.fire("err...", "Please enter a value", "warning");
     }
   };
 

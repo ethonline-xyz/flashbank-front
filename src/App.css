@@ -96,10 +96,7 @@ label {
 .wallet-address {
   font-family: "Manrope", "sans-serif";
   color: var(--theme-black);
-  width: 15rem;
   font-weight: 200;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .wallet-network {
