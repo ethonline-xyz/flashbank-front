@@ -33,11 +33,12 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
           from: account
         })
         .on("transactionHash", function (hash) {
-          Swal.fire("Tx pending", `https://kovan.etherscan.io/tx/${hash}`, "success"); // TODO: any other color? like blue?
+          // TODO: can etherscan or hash can be link in the modal?
+          Swal.fire("Tx pending", `https://kovan.etherscan.io/tx/${hash}`, "success"); // TODO: Here it should be status as in the modal pending
           setValue("");
         })
         .on('receipt', function(receipt){
-          Swal.fire("Txn Successfull", `https://kovan.etherscan.io/tx/${receipt.transactionHash}`, "success");
+          Swal.fire("Tx Confimred", `https://kovan.etherscan.io/tx/${receipt.transactionHash}`, "success"); /// TODO: and whenever it comes here it should update to `transaction confirmed` with status as success 
         })
 
   };
