@@ -14,6 +14,8 @@ import WithdrawTokens from "./components/InputFields/WithdrawTokens";
 import Stats from "./components/Stats/Stats";
 import WalletInfo from "./components/Wallet/WalletInfo";
 import TokenDropdown from "./components/InputFields/TokenDropdown";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const store = createStore<IGlobalStore>(globalStore);
 
@@ -34,6 +36,12 @@ function App() {
           <AddTokens />
           <AddUnderlyingTokens />
           <WithdrawTokens />
+          <ToastContainer
+            draggable={false}
+            hideProgressBar
+            position="bottom-right"
+            autoClose={10000}
+          />
         </div>
 
         {/* stats and wallet stuff */}

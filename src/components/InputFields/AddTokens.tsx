@@ -6,6 +6,7 @@ import cERC20PoolABI from "../cERC20Pool.json";
 import { useStoreState } from "../../store/globalStore";
 import { AddressOfContract } from "../addresses";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 // components, styles and UI
 import { Button, Input } from "semantic-ui-react";
@@ -33,20 +34,20 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
         from: account,
       })
       .on("transactionHash", function (hash) {
-        // TODO: can etherscan or hash can be link in the modal?
         Swal.fire(
           "Tx pending",
-          `https://kovan.etherscan.io/tx/${hash}`,
+          `view on <a target="_blank" rel = "noopener noreferrer" href='https://kovan.etherscan.io/tx/${hash}'>etherscan</a>`,
           "success"
-        ); // TODO: Here it should be status as in the modal pending
+        );
         setValue("");
       })
       .on("receipt", function (receipt) {
-        Swal.fire(
-          "Tx Confimred",
-          `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
-          "success"
-        ); /// TODO: and whenever it comes here it should update to `transaction confirmed` with status as success
+        toast(`Transaction Confirmed (view)`, {
+          onClick: () =>
+            window.open(
+              `https://kovan.etherscan.io/tx/${receipt.transactionHash}`
+            ),
+        });
       });
   };
 
