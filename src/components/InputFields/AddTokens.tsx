@@ -14,28 +14,32 @@ import { Button, Input } from "semantic-ui-react";
 export interface AddTokensProps {}
 
 const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
-  const { web3 } = useStoreState((state) => state);
+  const { web3, account, selectedToken } = useStoreState((state) => state);
 
   const [value, setValue] = useState<string>("");
 
   const handleSubmit = () => {
-    if (value) {
+    let token = selectedToken
+    if (!token) return Swal.fire("err...", "Please select token", "warning");
+    if (!value) return Swal.fire("err...", "Please enter a value", "warning");
       var contractInstance = new web3.eth.Contract(
         cERC20PoolABI,
-        AddressOfContract
+        AddressOfContract.ctokenPools[token.toLowerCase()]
       );
+      let valueInWei = String((Number(value) * 10 ** 8).toFixed(0))
       contractInstance.methods
-        .deposit(value)
-        .send()
+        .deposit(valueInWei)
+        .send({
+          from: account
+        })
         .on("transactionHash", function (hash) {
-          Swal.fire("Txn Successfull", hash, "success");
-          // Swal.fire("Oops...", "Txn Failed, try again", "error"); // use if fail
-        });
+          Swal.fire("Tx pending", `https://kovan.etherscan.io/tx/${hash}`, "success"); // TODO: any other color? like blue?
+          setValue("");
+        })
+        .on('receipt', function(receipt){
+          Swal.fire("Txn Successfull", `https://kovan.etherscan.io/tx/${receipt.transactionHash}`, "success");
+        })
 
-      setValue("");
-    } else {
-      Swal.fire("err...", "Please enter a value", "warning");
-    }
   };
 
   return (
