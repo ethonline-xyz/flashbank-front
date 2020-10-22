@@ -47,6 +47,9 @@ function App() {
           <Stats />
         </div>
       </div>
+      <div className="tagline">
+        Delegate your borrowing limit to earn more incentives
+      </div>
     </StoreProvider>
   );
 }
