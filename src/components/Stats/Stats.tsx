@@ -60,7 +60,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
 
   const updateValues = async () => {
     await getStats();
-    setPoolFee("0.0003%");
+    setPoolFee("0.03%");
   };
 
   function cleanDecimal(num, power) {
