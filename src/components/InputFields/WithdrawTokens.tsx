@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cERC20PoolABI from "../cERC20Pool.json";
 
 // hooks and services
@@ -14,12 +14,39 @@ import { toast } from "react-toastify";
 export interface WithdrawTokensProps {}
 
 const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
-  const { web3, account, selectedToken } = useStoreState((state) => state);
+  const { web3, web3Static, connected, account, selectedToken } = useStoreState((state) => state);
 
   const [value, setValue] = useState<string>("");
   const [address, setAddress] = useState<string>("");
 
   const [balance, setBalance] = useState<string>("100.00");
+
+  useEffect(() => {
+    if(connected){
+        checkBalance()
+    }
+      }, [connected]);
+
+function cleanDecimal(num, power) {
+  let MUL_DIV = 100
+  if (power || power === 0) {
+    MUL_DIV = 10 ** power
+  } else {
+    if (num < 0.01) MUL_DIV = 10 ** 6
+    if (num < 1) MUL_DIV = 10 ** 4
+  }
+  return Math.floor(Number(num) * MUL_DIV) / MUL_DIV
+}
+  const checkBalance = async () => {
+    let token = selectedToken ? selectedToken : "dai";
+    var contractInstance = new web3Static.eth.Contract(
+      cERC20PoolABI,
+      AddressOfContract.ctokenPools[token.toLowerCase()]
+    );
+    let bal = await contractInstance.methods.balanceOf(account).call()
+    bal = bal > 0 ? cleanDecimal(bal / 10 ** 8, 2) : 0 
+    setBalance(bal)
+  }
 
   const handleSubmit = () => {
     let token = selectedToken;
@@ -63,7 +90,7 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
     <div className="entry-form">
       <div className="balance">
         <h4>BALANCE</h4>
-        <div className="balance-value">${balance}</div>
+        <div className="balance-value">{balance}</div>
       </div>
       <h4>Withdraw cTokens</h4>
       <Input
