@@ -59,6 +59,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
         placeholder="Amount"
         onChange={(e) => setValue(e.target.value)}
       />
+      <br />
       <Button className="submit-button" fluid onClick={handleSubmit}>
         deposit
       </Button>

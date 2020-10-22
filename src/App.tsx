@@ -8,14 +8,12 @@ import globalStore, { IGlobalStore } from "./store/globalStore";
 
 // components, styles and UI
 import { Icon } from "semantic-ui-react";
-import AddTokens from "./components/InputFields/AddTokens";
-import AddUnderlyingTokens from "./components/InputFields/AddUnderlyingTokens";
-import WithdrawTokens from "./components/InputFields/WithdrawTokens";
 import Stats from "./components/Stats/Stats";
 import WalletInfo from "./components/Wallet/WalletInfo";
 import TokenDropdown from "./components/InputFields/TokenDropdown";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FormTabs from "./components/InputFields/FormTabs";
 
 const store = createStore<IGlobalStore>(globalStore);
 
@@ -33,9 +31,8 @@ function App() {
           </div>
 
           {/* Input fields */}
-          <AddTokens />
-          <AddUnderlyingTokens />
-          <WithdrawTokens />
+          <FormTabs />
+
           <ToastContainer
             draggable={false}
             hideProgressBar

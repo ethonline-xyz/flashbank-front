@@ -18,7 +18,6 @@ export interface AddUnderlyingTokensProps {}
 const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = () => {
   const { web3, account, selectedToken } = useStoreState((state) => state);
 
-
   const [value, setValue] = useState<string>("");
 
   const handleSubmit = () => {
@@ -61,6 +60,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
         placeholder="Amount"
         onChange={(e) => setValue(e.target.value)}
       />
+      <br />
       <Button className="submit-button" fluid onClick={handleSubmit}>
         deposit
       </Button>

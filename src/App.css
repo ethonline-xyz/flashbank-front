@@ -50,6 +50,29 @@ p {
   align-items: center;
 }
 
+.tabs-holder {
+  padding: 1rem;
+}
+
+.tabs {
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-around;
+  background: #1f2f6375;
+  border-radius: 0.7rem;
+}
+
+.tab {
+  padding: 0.3rem 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+.tab-active {
+  background: #1f2f63c2;
+}
+
 .entry-form {
   padding: 1rem 2rem;
   color: white;

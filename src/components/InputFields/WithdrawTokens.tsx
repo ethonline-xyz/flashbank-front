@@ -23,7 +23,12 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
     let token = selectedToken;
     if (!token) return Swal.fire("err...", "Please select token", "warning");
     if (!value) return Swal.fire("err...", "Please enter a value", "warning");
-    if (!address) return Swal.fire("err...", "Please enter a address to withdraw token", "warning");
+    if (!address)
+      return Swal.fire(
+        "err...",
+        "Please enter a address to withdraw token",
+        "warning"
+      );
     var contractInstance = new web3.eth.Contract(
       cERC20PoolABI,
       AddressOfContract.ctokenPools[token.toLowerCase()]
@@ -61,11 +66,13 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
         placeholder="Amount"
         onChange={(e) => setValue(e.target.value)}
       />
+      <br />
       <Input
         fluid
         placeholder="Address"
         onChange={(e) => setAddress(e.target.value)}
       />
+      <br />
       <Button className="submit-button" fluid onClick={handleSubmit}>
         withdraw
       </Button>
