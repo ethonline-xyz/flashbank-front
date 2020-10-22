@@ -27,7 +27,6 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     // do your magic here!
     // set values after fetching
     // rest will be taken care of
-    setEarnings("a");
     setPoolFee("9%");
   };
 
@@ -66,6 +65,8 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     setLockedAssets(String(cleanDecimal(tlv, 2)))
     setFlashloanAvailable(String(cleanDecimal(tlv * 0.75, 2)));
     setAvgApy(String(cleanDecimal(allAPY, 2)));
+    setEarnings(String(cleanDecimal(tlv * 0.0848354, 4)));
+
   }
 
   useEffect(() => {
