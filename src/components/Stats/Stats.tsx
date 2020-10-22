@@ -40,7 +40,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       <div className="stats-card">
         <div className="stat-title">
           Locked Assets
-          <Icon name="money" color="green" />
+          <Icon name="lock" color="orange" />
         </div>
         <div className="stat-value">
           ${lockedAssets || <Loader inline active />}
@@ -50,7 +50,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       <div className="stats-card">
         <div className="stat-title">
           Earnings
-          <Icon name="money" color="green" />
+          <Icon name="line graph" color="green" />
         </div>
         <div className="stat-value">
           ${earnings || <Loader inline active />}
@@ -60,7 +60,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       <div className="stats-card">
         <div className="stat-title">
           Pool Fee
-          <Icon name="money" color="green" />
+          <Icon name="money bill alternate outline" color="blue" />
         </div>
         <div className="stat-value">${poolFee || <Loader inline active />}</div>
       </div>
@@ -68,7 +68,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       <div className="stats-card">
         <div className="stat-title">
           Avg Apy
-          <Icon name="money" color="green" />
+          <Icon name="exchange" color="olive" />
         </div>
         <div className="stat-value">${avgApy || <Loader inline active />}</div>
       </div>
@@ -76,7 +76,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       <div className="stats-card">
         <div className="stat-title">
           Flashloan avl
-          <Icon name="money" color="green" />
+          <Icon name="handshake outline" color="grey" />
         </div>
         <div className="stat-value">
           ${flashloanAvailable || <Loader inline active />}
