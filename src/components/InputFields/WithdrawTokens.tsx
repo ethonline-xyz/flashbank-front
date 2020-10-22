@@ -19,6 +19,8 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
   const [value, setValue] = useState<string>("");
   const [address, setAddress] = useState<string>("");
 
+  const [balance, setBalance] = useState<string>("100.00");
+
   const handleSubmit = () => {
     let token = selectedToken;
     if (!token) return Swal.fire("err...", "Please select token", "warning");
@@ -59,6 +61,10 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
 
   return (
     <div className="entry-form">
+      <div className="balance">
+        <h4>BALANCE</h4>
+        <div className="balance-value">${balance}</div>
+      </div>
       <h4>Withdraw cTokens</h4>
       <Input
         className="input-field"

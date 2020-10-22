@@ -69,6 +69,16 @@ p {
   cursor: pointer;
 }
 
+.balance {
+  padding: 1rem 0;
+}
+
+.balance-value {
+  font-family: "Manrope", "sans-serif";
+  font-size: 3rem;
+  line-height: 3rem;
+}
+
 .tab-active {
   background: #1f2f63c2;
 }

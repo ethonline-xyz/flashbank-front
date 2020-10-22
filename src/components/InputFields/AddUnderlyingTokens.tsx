@@ -19,6 +19,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
   const { web3, account, selectedToken } = useStoreState((state) => state);
 
   const [value, setValue] = useState<string>("");
+  const [balance, setBalance] = useState<string>("100.00");
 
   const handleSubmit = () => {
     let token = selectedToken;
@@ -54,6 +55,10 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
 
   return (
     <div className="entry-form">
+      <div className="balance">
+        <h4>BALANCE</h4>
+        <div className="balance-value">${balance}</div>
+      </div>
       <h4>Deposit Underlying cToken</h4>
       <Input
         fluid
