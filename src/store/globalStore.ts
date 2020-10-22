@@ -22,7 +22,7 @@ const globalStore: IGlobalStore = {
   web3Static: null,
   account: "",
   network: "",
-  selectedToken: "",
+  selectedToken: "dai",
   connected: false,
 
   // actions

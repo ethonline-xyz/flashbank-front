@@ -28,6 +28,7 @@ const TokenDropdown: React.FunctionComponent<TokenDropdownProps> = () => {
       selectOnBlur
       placeholder="Token"
       className="token"
+      defaultValue="dai"
       compact
       selection
       options={countryOptions}
