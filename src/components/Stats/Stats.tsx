@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import statsABI from "../statsABI.json";
-// import flashLoadModuleABI from "../flashLoadModule.json";
+// import cERC20PoolABI from "../cERC20Pool.json";
+import flashLoadTestABI from "../flashLoadTestABI.json";
 
 // hooks and services
 import { useStoreState } from "../../store/globalStore";
@@ -8,12 +9,15 @@ import { AddressOfContract } from "../addresses";
 
 // components, styles and UI
 import { Icon, Loader } from "semantic-ui-react";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+
 
 // interfaces
 export interface StatsProps {}
 
 const Stats: React.FunctionComponent<StatsProps> = () => {
-  const { web3Static, connected } = useStoreState((state) => state);
+  const { web3, web3Static, connected, account } = useStoreState((state) => state);
 
   const [lockedAssets, setLockedAssets] = useState<string>("00.00");
   const [earnings, setEarnings] = useState<string>("");
@@ -21,11 +25,42 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
   const [avgApy, setAvgApy] = useState<string>("");
   const [flashloanAvailable, setFlashloanAvailable] = useState<string>("");
 
-  const handleTakeLoan = () => {};
+  const handleTakeLoan = () => {
+    var contractInstance = new web3.eth.Contract(
+      flashLoadTestABI,
+      AddressOfContract.flashloanTest
+    );
+    let valueInWei = "10000000"
+    contractInstance.methods
+      .borrow(
+        AddressOfContract.ctokens.dai,
+        valueInWei,
+        "0x"
+      )
+      .send({
+        from: account,
+      })
+      .on("transactionHash", function (hash) {
+        Swal.fire(
+          "Flashloan Tx pending",
+          `view on <a target="_blank" rel = "noopener noreferrer" href='https://kovan.etherscan.io/tx/${hash}'>etherscan</a>`,
+          "success"
+        );
+      })
+      .on("receipt", function (receipt) {
+        updateValues()
+        toast(`Flashloan Transaction Confirmed (view)`, {
+          onClick: () =>
+            window.open(
+              `https://kovan.etherscan.io/tx/${receipt.transactionHash}`
+            ),
+        });
+      });
+  };
 
   const updateValues = async () => {
     await getStats();
-    setPoolFee("9%");
+    setPoolFee("0.0003%");
   };
 
   function cleanDecimal(num, power) {
@@ -46,14 +81,25 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       statsABI,
       AddressOfContract.stats
     );
+
+    var testContractInstance = new web3Static.eth.Contract(
+      flashLoadTestABI,
+      AddressOfContract.flashloanTest
+    );
+
     let pools = Object.values(AddressOfContract.ctokenPools);
     let data = await contractInstance.methods.getStats(pools).call();
+    let feeData = await testContractInstance.methods.feeVariable().call();
     let tlv = 0;
     let allAPY = 0;
+    let fee = 0;
+    let percentage = 0.0448354
     data.forEach((a) => {
       let bal = a[1];
       let price = a[2];
       tlv += (bal / 10 ** 18) * (price / 10 ** 18);
+      fee += percentage * (bal / 10 ** 18) * (price / 10 ** 18);
+      fee += feeData / 1e6 * (price / 10 ** 18);
       let diffRate = (a[0] - initalExchangeRate) / initalExchangeRate;
       let diffBlocks = a[3] - a[4];
       allAPY += (diffRate / diffBlocks) * noOfBlocksInYear;
@@ -63,7 +109,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     setLockedAssets(String(cleanDecimal(tlv, 2)));
     setFlashloanAvailable(String(cleanDecimal(tlv * 0.75, 2)));
     setAvgApy(String(cleanDecimal(allAPY, 2)));
-    setEarnings(String(cleanDecimal(tlv * 0.0848354, 4)));
+    setEarnings(String(cleanDecimal(fee , 4)));
   };
 
   useEffect(() => {
