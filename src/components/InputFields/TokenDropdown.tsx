@@ -15,18 +15,18 @@ const TokenDropdown: React.FunctionComponent<TokenDropdownProps> = () => {
   );
 
   const countryOptions = [
-    { key: "dai", value: "dai", text: "dai" },
-    { key: "eth", value: "eth", text: "eth" },
+    { key: "dai", value: "dai", text: "DAI" },
+    { key: "eth", value: "eth", text: "ETH" },
   ];
 
   const handleChange = (e, data) => {
     setCurrentToken(data.value);
   };
-
+  // TODO: set default value to "DAI"
   return (
     <Dropdown
       selectOnBlur
-      placeholder="token"
+      placeholder="Token"
       className="token"
       compact
       selection
