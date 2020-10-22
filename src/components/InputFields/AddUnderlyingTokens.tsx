@@ -20,6 +20,13 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
 
   const [value, setValue] = useState<string>("");
   const [balance, setBalance] = useState<string>("100.00");
+  const [isApproved, setIsApproved] = useState<boolean>(false);
+
+  const handleApprove = () => {
+    // do some stuff here
+    // once approved set isApproved true
+    setIsApproved(true);
+  };
 
   const handleSubmit = () => {
     let token = selectedToken;
@@ -65,8 +72,23 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
         placeholder="Amount"
         onChange={(e) => setValue(e.target.value)}
       />
+
+      {!isApproved && (
+        <>
+          <br />
+          <Button className="submit-button" fluid onClick={handleApprove}>
+            approve cToken
+          </Button>
+        </>
+      )}
+
       <br />
-      <Button className="submit-button" fluid onClick={handleSubmit}>
+      <Button
+        className="submit-button"
+        fluid
+        disabled={!isApproved}
+        onClick={handleSubmit}
+      >
         deposit
       </Button>
     </div>
