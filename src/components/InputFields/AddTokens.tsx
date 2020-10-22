@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import cERC20PoolABI from "../cERC20Pool.json";
 // import flashLoadModuleABI from "../flashLoadModule.json";
 
@@ -15,7 +15,7 @@ import { Button, Input } from "semantic-ui-react";
 export interface AddTokensProps {}
 
 const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
-  const { web3, account, selectedToken } = useStoreState((state) => state);
+  const { web3, web3Static,account, selectedToken } = useStoreState((state) => state);
 
   const [value, setValue] = useState<string>("");
   const [balance, setBalance] = useState<string>("100.00");
@@ -26,6 +26,24 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
     // once approved set isApproved true
     setIsApproved(true);
   };
+
+  useEffect(() => {
+    checkAllowance()
+  }, []);
+
+  const checkAllowance = async () => {
+    let token = selectedToken ? selectedToken : "dai";
+    var contractInstance = new web3Static.eth.Contract(
+      cERC20PoolABI,
+      AddressOfContract.ctokens[token.toLowerCase()]
+    );
+    let allowance = contractInstance.methods.allowance(account, AddressOfContract.ctokenPools[token.toLowerCase()])
+    if (allowance > 10 ** 50) {
+      setIsApproved(true);
+    } else {
+      setIsApproved(false);
+    }
+  }
 
   const handleSubmit = () => {
     let token = selectedToken;
@@ -50,6 +68,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
         setValue("");
       })
       .on("receipt", function (receipt) {
+        checkAllowance()
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(

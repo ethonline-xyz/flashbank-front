@@ -2,6 +2,7 @@ import { Action, action, createTypedHooks } from "easy-peasy";
 
 export interface IGlobalStore {
   web3: any;
+  web3Static: any;
   selectedToken: string;
   account: string;
   network: string;
@@ -9,6 +10,7 @@ export interface IGlobalStore {
 
   // actions
   setWeb3: Action<IGlobalStore, any>;
+  setWeb3Static: Action<IGlobalStore, any>;
   setSelectedToken: Action<IGlobalStore, string>;
   setAccount: Action<IGlobalStore, string>;
   setNetwork: Action<IGlobalStore, string>;
@@ -17,6 +19,7 @@ export interface IGlobalStore {
 
 const globalStore: IGlobalStore = {
   web3: null,
+  web3Static: null,
   account: "",
   network: "",
   selectedToken: "",
@@ -25,6 +28,10 @@ const globalStore: IGlobalStore = {
   // actions
   setWeb3: action((state, payload: any) => {
     state.web3 = payload;
+  }),
+
+  setWeb3Static: action((state, payload: any) => {
+    state.web3Static = payload;
   }),
 
   setSelectedToken: action((state, payload: string) => {

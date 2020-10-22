@@ -12,11 +12,11 @@ import { Button } from "semantic-ui-react";
 export interface WalletInfoProps {}
 
 const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
-  const { setAccount, setNetwork, setWeb3, setConnected } = useStoreActions(
+  const { setAccount, setNetwork, setWeb3, setWeb3Static, setConnected } = useStoreActions(
     (actions) => actions
   );
 
-  const { web3, account, network, connected } = useStoreState((state) => state);
+  const { web3, web3Static, account, network, connected } = useStoreState((state) => state);
 
   const providerOptions = {};
   const web3Modal = new Web3Modal({
@@ -62,6 +62,9 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
   };
 
   useEffect(() => {
+    let _webStatic = new Web3(new Web3.providers.HttpProvider("https://kovan.infura.io/v3/b97ae93c37f94adcb8cede56c94f6cc1"));
+    
+    setWeb3Static(_webStatic)
     if (web3Modal.cachedProvider) {
       onConnect();
     }
