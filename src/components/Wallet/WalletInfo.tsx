@@ -68,7 +68,7 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
   useEffect(() => {
     let _webStatic = new Web3(
       new Web3.providers.HttpProvider(
-        "https://kovan.infura.io/v3/b97ae93c37f94adcb8cede56c94f6cc1"
+        "https://poa-kovan.gateway.pokt.network/v1/5f92020ab90218002e9cea74"
       )
     );
     console.log(_webStatic);
