@@ -26,7 +26,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
   const handleApprove = async () => {
     let maxValue = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
     let token = selectedToken ? selectedToken : "dai";
-    var contractInstance = new web3Static.eth.Contract(
+    var contractInstance = new web3.eth.Contract(
       cERC20PoolABI,
       AddressOfContract.ctokens[token.toLowerCase()]
     );
