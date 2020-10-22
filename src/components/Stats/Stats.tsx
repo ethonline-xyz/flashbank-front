@@ -21,11 +21,10 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
   const [avgApy, setAvgApy] = useState<string>("");
   const [flashloanAvailable, setFlashloanAvailable] = useState<string>("");
 
+  const handleTakeLoan = () => {};
+
   const updateValues = async () => {
     await getStats();
-    // do your magic here!
-    // set values after fetching
-    // rest will be taken care of
     setPoolFee("9%");
   };
 
@@ -104,7 +103,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
         <div className="stat-value">{poolFee || <Loader inline active />}</div>
       </div>
 
-      <div className="stats-card stats-card-wider">
+      <div className="stats-card">
         <div className="stat-title">
           Avg Apy
           <Icon name="exchange" color="olive" />
@@ -120,6 +119,10 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
         <div className="stat-value">
           ${flashloanAvailable || <Loader inline active />}
         </div>
+      </div>
+
+      <div className="stats-card takeloan" onClick={handleTakeLoan}>
+        Take FlashLoan <Icon name="check" />
       </div>
     </div>
   );

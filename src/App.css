@@ -156,8 +156,16 @@ label {
   flex-direction: column;
 }
 
-.stats-card-wider {
-  width: 15rem;
+.takeloan {
+  flex-direction: row;
+  align-items: flex-end;
+  font-size: 1.5rem;
+  background: #6177e525;
+  cursor: pointer;
+}
+
+.takeloan:hover {
+  background: #6177e546;
 }
 
 .refresh {
@@ -174,8 +182,8 @@ label {
 }
 
 .stat-value {
-  font-size: 2.5rem;
-  line-height: 2.5rem;
+  font-size: 2.3rem;
+  line-height: 2.3rem;
   width: 100%;
   overflow-y: hidden;
   text-overflow: ellipsis;
