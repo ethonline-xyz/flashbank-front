@@ -122,6 +122,7 @@ function cleanDecimal(num, power) {
         setValue("");
       })
       .on("receipt", function (receipt) {
+        checkBalance()
         checkAllowance()
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>

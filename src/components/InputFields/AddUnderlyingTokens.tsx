@@ -27,7 +27,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
   const handleApprove = async () => {
     let maxValue = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
     let token = selectedToken ? selectedToken : "dai";
-    var contractInstance = new web3Static.eth.Contract(
+    var contractInstance = new web3.eth.Contract(
       cERC20PoolABI,
       AddressOfContract.tokens[token.toLowerCase()]
     );
@@ -107,7 +107,7 @@ function cleanDecimal(num, power) {
       cERC20PoolABI,
       AddressOfContract.ctokenPools[token.toLowerCase()]
     );
-    let valueInWei = String((Number(value) * 10 ** 8).toFixed(0));
+    let valueInWei = String((Number(value) * 10 ** 18).toFixed(0));
     contractInstance.methods
       .depositUnderlying(valueInWei)
       .send({
@@ -122,6 +122,7 @@ function cleanDecimal(num, power) {
         setValue("");
       })
       .on("receipt", function (receipt) {
+        checkBalance()
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
