@@ -182,3 +182,14 @@ label {
   font-family: "Manrope", sans-serif;
   color: var(--theme-black-darker);
 }
+
+.tagline {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  opacity: 0.8;
+}
