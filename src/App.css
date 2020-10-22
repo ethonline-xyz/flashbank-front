@@ -156,6 +156,10 @@ label {
   flex-direction: column;
 }
 
+.stats-card-wider {
+  width: 15rem;
+}
+
 .refresh {
   background: var(--theme-gray);
   display: flex;

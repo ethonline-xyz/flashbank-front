@@ -15,16 +15,20 @@ import { Button, Input } from "semantic-ui-react";
 export interface AddTokensProps {}
 
 const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
-  const { web3, web3Static, connected, account, selectedToken } = useStoreState((state) => state);
+  const { web3, web3Static, connected, account, selectedToken } = useStoreState(
+    (state) => state
+  );
 
   const [value, setValue] = useState<string>("");
-  const [balance, setBalance] = useState<string>("00.00");
+  const [balance, setBalance] = useState<string>("0");
   const [isApproved, setIsApproved] = useState<boolean>(true);
   const [isAllowed, setIsAllowed] = useState<boolean>(false);
+  // eslint-disable-next-line
   const [isApprovedShow, setIsApprovedShow] = useState<boolean>(false);
 
   const handleApprove = async () => {
-    let maxValue = "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+    let maxValue =
+      "115792089237316195423570985008687907853269984665640564039457584007913129639935";
     let token = selectedToken ? selectedToken : "dai";
     var contractInstance = new web3.eth.Contract(
       cERC20PoolABI,
@@ -36,7 +40,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
         from: account,
       })
       .on("transactionHash", function (hash) {
-        checkAllowance()
+        checkAllowance();
         Swal.fire(
           "Allownace tx pending",
           `view on <a target="_blank" rel = "noopener noreferrer" href='https://kovan.etherscan.io/tx/${hash}'>etherscan</a>`,
@@ -44,8 +48,8 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
         );
       })
       .on("receipt", function (receipt) {
-        checkAllowance()
-        setIsAllowed(true)
+        checkAllowance();
+        setIsAllowed(true);
         toast(`Allownace Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
@@ -56,47 +60,50 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
   };
 
   useEffect(() => {
-    if(connected){
-        checkBalance()
-        checkAllowance()
+    if (connected) {
+      checkBalance();
+      checkAllowance();
     }
-      }, [connected]);
+    // eslint-disable-next-line
+  }, [connected]);
 
-function cleanDecimal(num, power) {
-  let MUL_DIV = 100
-  if (power || power === 0) {
-    MUL_DIV = 10 ** power
-  } else {
-    if (num < 0.01) MUL_DIV = 10 ** 6
-    if (num < 1) MUL_DIV = 10 ** 4
+  function cleanDecimal(num, power) {
+    let MUL_DIV = 100;
+    if (power || power === 0) {
+      MUL_DIV = 10 ** power;
+    } else {
+      if (num < 0.01) MUL_DIV = 10 ** 6;
+      if (num < 1) MUL_DIV = 10 ** 4;
+    }
+    return Math.floor(Number(num) * MUL_DIV) / MUL_DIV;
   }
-  return Math.floor(Number(num) * MUL_DIV) / MUL_DIV
-}
   const checkBalance = async () => {
     let token = selectedToken ? selectedToken : "dai";
     var contractInstance = new web3Static.eth.Contract(
       cERC20PoolABI,
       AddressOfContract.ctokens[token.toLowerCase()]
     );
-    let bal = await contractInstance.methods.balanceOf(account).call()
-    bal = bal > 0 ? cleanDecimal(bal / 10 ** 8, 2) : 0 
-    setBalance(bal)
-  }
+    let bal = await contractInstance.methods.balanceOf(account).call();
+    bal = bal > 0 ? cleanDecimal(bal / 10 ** 8, 2) : 0;
+    setBalance(bal);
+  };
   const checkAllowance = async () => {
     let token = selectedToken ? selectedToken : "dai";
     var contractInstance = new web3Static.eth.Contract(
       cERC20PoolABI,
       AddressOfContract.ctokens[token.toLowerCase()]
     );
-    let allowance = await contractInstance.methods.allowance(account, AddressOfContract.ctokenPools[token.toLowerCase()]).call()
+    let allowance = await contractInstance.methods
+      .allowance(account, AddressOfContract.ctokenPools[token.toLowerCase()])
+      .call();
     if (allowance > 0) {
       setIsApproved(true);
-      setIsAllowed(true)
+      setIsAllowed(true);
     } else {
       setIsApproved(false);
-      setIsAllowed(false)
+      setIsAllowed(false);
     }
-  }
+  };
 
   const handleSubmit = () => {
     let token = selectedToken;
@@ -113,7 +120,7 @@ function cleanDecimal(num, power) {
         from: account,
       })
       .on("transactionHash", function (hash) {
-        checkAllowance()
+        checkAllowance();
         Swal.fire(
           "Tx pending",
           `view on <a target="_blank" rel = "noopener noreferrer" href='https://kovan.etherscan.io/tx/${hash}'>etherscan</a>`,
@@ -122,8 +129,8 @@ function cleanDecimal(num, power) {
         setValue("");
       })
       .on("receipt", function (receipt) {
-        checkBalance()
-        checkAllowance()
+        checkBalance();
+        checkAllowance();
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
@@ -144,9 +151,10 @@ function cleanDecimal(num, power) {
         fluid
         placeholder="Amount"
         onChange={(e) => {
-          setValue(e.target.value)
-          if(e.target.value != "" && e.target.value != String(0)) setIsApprovedShow(true)
-          else setIsApprovedShow(false)
+          setValue(e.target.value);
+          if (e.target.value !== "" && e.target.value !== String(0))
+            setIsApprovedShow(true);
+          else setIsApprovedShow(false);
         }}
       />
 
