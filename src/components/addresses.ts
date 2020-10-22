@@ -1,7 +1,8 @@
 const AddressOfContract = {
     flashloanModule: "0x31d680f9B98899925B19C9455423527d3AC36172",
+    stats: "0x736db7127E2e117478C07201160b331049290fff",
     ctokenPools: {
-        dai: "0x96e60ad6120F14e60B6D9F32737CB418e4AaF13e"
+        dai: "0x14d57C75e11a71e119ca2D284D7aC6843ADF6797"
     },
     ctokens: {
         dai: "0xf0d0eb522cfa50b716b3b1604c4f0fa6f04376ad"
