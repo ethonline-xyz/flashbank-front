@@ -15,8 +15,18 @@ const TokenDropdown: React.FunctionComponent<TokenDropdownProps> = () => {
   );
 
   const countryOptions = [
-    { key: "dai", value: "dai", text: "DAI" },
-    { key: "eth", value: "eth", text: "ETH" },
+    {
+      key: "dai",
+      value: "dai",
+      text: "DAI",
+      image: { avatar: true, src: require("../../assets/dai.jpg") },
+    },
+    {
+      key: "eth",
+      value: "eth",
+      text: "ETH",
+      image: { avatar: true, src: require("../../assets/eth.png") },
+    },
   ];
 
   const handleChange = (e, data) => {
