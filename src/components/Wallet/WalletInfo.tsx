@@ -71,7 +71,6 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
         "https://poa-kovan.gateway.pokt.network/v1/5f92020ab90218002e9cea74"
       )
     );
-    console.log(_webStatic);
     setWeb3Static(_webStatic);
     if (web3Modal.cachedProvider) {
       onConnect();
@@ -84,7 +83,15 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
       <div>
         <div className="wallet-network">{network}</div>
         <div className="wallet-address">
-          {account || "connect to ethereum wallet"}
+          {(
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href={`https://kovan.etherscan.io/address/${account}`}
+            >
+              {account}
+            </a>
+          ) || "connect to ethereum wallet"}
         </div>
       </div>
       <Button

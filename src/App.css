@@ -89,12 +89,12 @@ p {
 }
 
 .app-title {
-  font-size: 1.8rem;
-  line-height: 1.8rem;
+  font-size: 2rem;
+  line-height: 2rem;
 }
 
 .dropdown {
-  width: 6rem;
+  width: 8rem;
 }
 
 label {

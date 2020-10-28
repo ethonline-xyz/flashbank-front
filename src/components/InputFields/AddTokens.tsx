@@ -144,7 +144,9 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
     <div className="entry-form">
       <div className="balance">
         <h4>BALANCE</h4>
-        <div className="balance-value">{balance}</div>
+        <div className="balance-value">
+          {balance} c{selectedToken.toUpperCase()}
+        </div>
       </div>
       <h4>Deposit cTokens</h4>
       <Input
