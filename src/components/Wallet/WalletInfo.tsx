@@ -83,7 +83,7 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
       <div>
         <div className="wallet-network">{network}</div>
         <div className="wallet-address">
-          {(
+          {account ? (
             <a
               target="_blank"
               rel="noopener noreferrer"
@@ -91,7 +91,9 @@ const WalletInfo: React.FunctionComponent<WalletInfoProps> = () => {
             >
               {account}
             </a>
-          ) || "connect to ethereum wallet"}
+          ) : (
+            "connect to ethereum wallet"
+          )}
         </div>
       </div>
       <Button
