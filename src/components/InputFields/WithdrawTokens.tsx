@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import cERC20PoolABI from "../cERC20Pool.json";
 
 // hooks and services
-import { useStoreState } from "../../store/globalStore";
+import { useStoreActions, useStoreState } from "../../store/globalStore";
 import { AddressOfContract } from "../addresses";
 
 // components, styles and UI
@@ -17,6 +17,8 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
   const { web3, web3Static, connected, account, selectedToken } = useStoreState(
     (state) => state
   );
+
+  const { setShouldUpdate } = useStoreActions((action) => action);
 
   const [value, setValue] = useState<string>("");
   const [address, setAddress] = useState<string>("");
@@ -80,6 +82,7 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
         setValue("");
       })
       .on("receipt", function (receipt) {
+        setShouldUpdate(true);
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(

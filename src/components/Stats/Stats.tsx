@@ -4,7 +4,7 @@ import statsABI from "../statsABI.json";
 import flashLoadTestABI from "../flashLoadTestABI.json";
 
 // hooks and services
-import { useStoreState } from "../../store/globalStore";
+import { useStoreState, useStoreActions } from "../../store/globalStore";
 import { AddressOfContract } from "../addresses";
 
 // components, styles and UI
@@ -16,9 +16,11 @@ import { toast } from "react-toastify";
 export interface StatsProps {}
 
 const Stats: React.FunctionComponent<StatsProps> = () => {
-  const { web3, web3Static, connected, account } = useStoreState(
+  const { web3, web3Static, connected, account, shouldUpdate } = useStoreState(
     (state) => state
   );
+
+  const { setShouldUpdate } = useStoreActions((action) => action);
 
   const [lockedAssets, setLockedAssets] = useState<string>("00.00");
   const [earnings, setEarnings] = useState<string>("");
@@ -118,6 +120,14 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     }
     // eslint-disable-next-line
   }, [connected]);
+
+  useEffect(() => {
+    if (shouldUpdate) {
+      updateValues();
+      setShouldUpdate(false);
+    }
+    // eslint-disable-next-line
+  }, [shouldUpdate]);
 
   return (
     <div className="stats">

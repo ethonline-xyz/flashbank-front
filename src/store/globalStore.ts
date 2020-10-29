@@ -7,6 +7,7 @@ export interface IGlobalStore {
   account: string;
   network: string;
   connected: boolean;
+  shouldUpdate: boolean;
 
   // actions
   setWeb3: Action<IGlobalStore, any>;
@@ -15,6 +16,7 @@ export interface IGlobalStore {
   setAccount: Action<IGlobalStore, string>;
   setNetwork: Action<IGlobalStore, string>;
   setConnected: Action<IGlobalStore, boolean>;
+  setShouldUpdate: Action<IGlobalStore, boolean>;
 }
 
 const globalStore: IGlobalStore = {
@@ -24,6 +26,7 @@ const globalStore: IGlobalStore = {
   network: "",
   selectedToken: "dai",
   connected: false,
+  shouldUpdate: false,
 
   // actions
   setWeb3: action((state, payload: any) => {
@@ -48,6 +51,10 @@ const globalStore: IGlobalStore = {
 
   setConnected: action((state, payload: boolean) => {
     state.connected = payload;
+  }),
+
+  setShouldUpdate: action((state, payload: boolean) => {
+    state.shouldUpdate = payload;
   }),
 };
 
