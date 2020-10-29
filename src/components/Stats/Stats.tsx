@@ -30,7 +30,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       flashLoadTestABI,
       AddressOfContract.flashloanTest
     );
-    let valueInWei = "10000000"
+    let valueInWei = "1000000000"
     contractInstance.methods
       .borrow(
         AddressOfContract.ctokens.dai,
@@ -82,14 +82,15 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       AddressOfContract.stats
     );
 
-    var testContractInstance = new web3Static.eth.Contract(
-      flashLoadTestABI,
-      AddressOfContract.flashloanTest
-    );
+    // var testContractInstance = new web3Static.eth.Contract(
+    //   flashLoadTestABI,
+    //   AddressOfContract.flashloanTest
+    // );
 
     let pools = Object.values(AddressOfContract.ctokenPools);
-    let data = await contractInstance.methods.getStats(pools).call();
-    let feeData = await testContractInstance.methods.feeVariable().call();
+    let ctokens = Object.values(AddressOfContract.ctokens);
+    let data = await contractInstance.methods.getStats(pools, ctokens).call();
+    // let feeData = await testContractInstance.methods.feeVariable().call();
     let tlv = 0;
     let allAPY = 0;
     let fee = 0;
@@ -97,15 +98,17 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     data.forEach((a) => {
       let bal = a[1];
       let price = a[2];
+      let feeData = a[5]
       tlv += (bal / 10 ** 18) * (price / 10 ** 18);
-      fee += percentage * (bal / 10 ** 18) * (price / 10 ** 18);
-      fee += feeData / 1e6 * (price / 10 ** 18);
+      // fee += percentage * (bal / 10 ** 18) * (price / 10 ** 18);
+      fee += feeData / 1e8 * (price / 10 ** 18);
       let diffRate = (a[0] - initalExchangeRate) / initalExchangeRate;
       let diffBlocks = a[3] - a[4];
       allAPY += (diffRate / diffBlocks) * noOfBlocksInYear;
     });
-
-    allAPY = allAPY / data.length / 100;
+    console.log(data)
+    console.log(allAPY)
+    allAPY = allAPY / data.length;
     setLockedAssets(String(cleanDecimal(tlv, 2)));
     setFlashloanAvailable(String(cleanDecimal(tlv * 0.75, 2)));
     setAvgApy(String(cleanDecimal(allAPY, 2)));

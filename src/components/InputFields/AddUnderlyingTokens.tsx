@@ -143,7 +143,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       <div className="balance">
         <h4>BALANCE</h4>
         <div className="balance-value">
-          {balance} c{selectedToken.toUpperCase()}
+          {balance} {selectedToken.toUpperCase()}
         </div>
       </div>
       <h4>Deposit Underlying cToken</h4>

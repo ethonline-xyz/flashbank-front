@@ -5,6 +5,11 @@
 				"internalType": "address[]",
 				"name": "pools",
 				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "tokens",
+				"type": "address[]"
 			}
 		],
 		"name": "getStats",
@@ -34,6 +39,11 @@
 					{
 						"internalType": "uint256",
 						"name": "createdBlockNumber",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "feeCollected",
 						"type": "uint256"
 					}
 				],
@@ -93,6 +103,19 @@
 	{
 		"inputs": [],
 		"name": "getOracleAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getTestContract",
 		"outputs": [
 			{
 				"internalType": "address",

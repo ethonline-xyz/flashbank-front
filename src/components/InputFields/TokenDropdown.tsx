@@ -22,10 +22,10 @@ const TokenDropdown: React.FunctionComponent<TokenDropdownProps> = () => {
       image: { avatar: true, src: require("../../assets/dai.jpg") },
     },
     {
-      key: "eth",
-      value: "eth",
-      text: "ETH",
-      image: { avatar: true, src: require("../../assets/eth.png") },
+      key: "usdc",
+      value: "usdc",
+      text: "USDC",
+      image: { avatar: true, src: require("../../assets/usdc.svg") },
     },
   ];
 

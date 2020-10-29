@@ -94,7 +94,7 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
       <div className="balance">
         <h4>BALANCE</h4>
         <div className="balance-value">
-          {balance} c{selectedToken.toUpperCase()}
+          {balance} f{selectedToken.toUpperCase()}
         </div>
       </div>
       <h4>Withdraw cTokens</h4>
