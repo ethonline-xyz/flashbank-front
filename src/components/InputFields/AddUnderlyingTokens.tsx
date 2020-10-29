@@ -52,7 +52,6 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       .on("receipt", function (receipt) {
         checkAllowance();
         setIsAllowed(true);
-        setShouldUpdate(true);
         toast(`Allowance Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
@@ -132,6 +131,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       })
       .on("receipt", function (receipt) {
         checkBalance();
+        setShouldUpdate(true);
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(

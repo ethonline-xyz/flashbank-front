@@ -52,7 +52,6 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
       .on("receipt", function (receipt) {
         checkAllowance();
         setIsAllowed(true);
-        setShouldUpdate(true);
         toast(`Allowance Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
@@ -134,6 +133,7 @@ const AddTokens: React.FunctionComponent<AddTokensProps> = () => {
       .on("receipt", function (receipt) {
         checkBalance();
         checkAllowance();
+        setShouldUpdate(true);
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
