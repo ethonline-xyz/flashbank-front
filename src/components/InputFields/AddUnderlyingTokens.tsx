@@ -4,7 +4,7 @@ import cERC20PoolABI from "../cERC20Pool.json";
 // import flashLoadModuleABI from "../flashLoadModule.json";
 
 // hooks and services
-import { useStoreState } from "../../store/globalStore";
+import { useStoreActions, useStoreState } from "../../store/globalStore";
 import { AddressOfContract } from "../addresses";
 
 // components, styles and UI
@@ -19,6 +19,8 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
   const { web3, web3Static, connected, account, selectedToken } = useStoreState(
     (state) => state
   );
+
+  const { setShouldUpdate } = useStoreActions((action) => action);
 
   const [value, setValue] = useState<string>("");
   const [balance, setBalance] = useState<string>("0");
@@ -42,7 +44,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       .on("transactionHash", function (hash) {
         checkAllowance();
         Swal.fire(
-          "Allownace tx pending",
+          "Allowance tx pending",
           `view on <a target="_blank" rel = "noopener noreferrer" href='https://kovan.etherscan.io/tx/${hash}'>etherscan</a>`,
           "success"
         );
@@ -50,7 +52,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       .on("receipt", function (receipt) {
         checkAllowance();
         setIsAllowed(true);
-        toast(`Allownace Transaction Confirmed (view)`, {
+        toast(`Allowance Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
               `https://kovan.etherscan.io/tx/${receipt.transactionHash}`
@@ -129,6 +131,7 @@ const AddUnderlyingTokens: React.FunctionComponent<AddUnderlyingTokensProps> = (
       })
       .on("receipt", function (receipt) {
         checkBalance();
+        setShouldUpdate(true);
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
