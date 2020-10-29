@@ -12,12 +12,13 @@ import { Icon, Loader } from "semantic-ui-react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 
-
 // interfaces
 export interface StatsProps {}
 
 const Stats: React.FunctionComponent<StatsProps> = () => {
-  const { web3, web3Static, connected, account } = useStoreState((state) => state);
+  const { web3, web3Static, connected, account } = useStoreState(
+    (state) => state
+  );
 
   const [lockedAssets, setLockedAssets] = useState<string>("00.00");
   const [earnings, setEarnings] = useState<string>("");
@@ -30,13 +31,9 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       flashLoadTestABI,
       AddressOfContract.flashloanTest
     );
-    let valueInWei = "1000000000"
+    let valueInWei = "1000000000";
     contractInstance.methods
-      .borrow(
-        AddressOfContract.ctokens.dai,
-        valueInWei,
-        "0x"
-      )
+      .borrow(AddressOfContract.ctokens.dai, valueInWei, "0x")
       .send({
         from: account,
       })
@@ -48,7 +45,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
         );
       })
       .on("receipt", function (receipt) {
-        updateValues()
+        updateValues();
         toast(`Flashloan Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(
@@ -94,25 +91,25 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
     let tlv = 0;
     let allAPY = 0;
     let fee = 0;
-    let percentage = 0.0448354
+    // let percentage = 0.0448354
     data.forEach((a) => {
       let bal = a[1];
       let price = a[2];
-      let feeData = a[5]
+      let feeData = a[5];
       tlv += (bal / 10 ** 18) * (price / 10 ** 18);
       // fee += percentage * (bal / 10 ** 18) * (price / 10 ** 18);
-      fee += feeData / 1e8 * (price / 10 ** 18);
+      fee += (feeData / 1e8) * (price / 10 ** 18);
       let diffRate = (a[0] - initalExchangeRate) / initalExchangeRate;
       let diffBlocks = a[3] - a[4];
       allAPY += (diffRate / diffBlocks) * noOfBlocksInYear;
     });
-    console.log(data)
-    console.log(allAPY)
+    console.log(data);
+    console.log(allAPY);
     allAPY = allAPY / data.length;
     setLockedAssets(String(cleanDecimal(tlv, 2)));
     setFlashloanAvailable(String(cleanDecimal(tlv * 0.75, 2)));
     setAvgApy(String(cleanDecimal(allAPY, 2)));
-    setEarnings(String(cleanDecimal(fee , 4)));
+    setEarnings(String(cleanDecimal(fee, 4)));
   };
 
   useEffect(() => {
