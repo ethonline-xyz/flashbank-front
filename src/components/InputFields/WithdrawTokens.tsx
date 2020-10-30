@@ -83,6 +83,7 @@ const WithdrawTokens: React.FunctionComponent<WithdrawTokensProps> = () => {
       })
       .on("receipt", function (receipt) {
         setShouldUpdate(true);
+        checkBalance();
         toast(`Transaction Confirmed (view)`, {
           onClick: () =>
             window.open(

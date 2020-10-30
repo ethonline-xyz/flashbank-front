@@ -88,7 +88,7 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
 
     let pools = Object.values(AddressOfContract.ctokenPools);
     let ctokens = Object.values(AddressOfContract.ctokens);
-    let data = await contractInstance.methods.getStats(pools, ctokens).call();
+    let data = await contractInstance.methods.getStats(pools, ctokens, AddressOfContract.flashloanTest).call();
     // let feeData = await testContractInstance.methods.feeVariable().call();
     let tlv = 0;
     let allAPY = 0;

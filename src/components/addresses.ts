@@ -1,10 +1,10 @@
 const AddressOfContract = {
-    flashloanModule: "0xe0bd1a94c977208e1a919a38fb7bae8b0ef485f8",
-    stats: "0xC3426760DDA2A031B09ae27901afCC02B7956557",
-    flashloanTest: "0x56a43f31470a5A2191d95AEd88E3a69f3adFEaf4",
+    flashloanModule: "0xc376a7b42c4ebed387815b434973c69634f29e1b",
+    stats: "0x3bb65681d7841caa2e65061dd3b9e8d967ea52d4",
+    flashloanTest: "0x504db15997A6c9163AC0441E9079837E520b2810",
     ctokenPools: {
-        dai: "0x86ecc2e183e0a57b1f6232da59f7f358e91b6fc1",
-        usdc: "0x574e950844f4954e5330043df1a396727aa00a03"
+        dai: "0xce45e56bb1cbbf715bf2ec8ffba4e61cec3edf3b",
+        usdc: "0x2b458f19236831cf72a21ad4bbbacd6c9e8cf27d"
     },
     ctokens: {
         dai: "0xf0d0eb522cfa50b716b3b1604c4f0fa6f04376ad",
