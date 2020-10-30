@@ -105,9 +105,10 @@ const Stats: React.FunctionComponent<StatsProps> = () => {
       let diffBlocks = a[3] - a[4];
       allAPY += (diffRate / diffBlocks) * noOfBlocksInYear;
     });
-    console.log(data);
-    console.log(allAPY);
-    allAPY = allAPY / data.length;
+    allAPY = allAPY / data.length
+    if (allAPY > 10000) {allAPY = allAPY / 1000}
+    else if (allAPY > 1000) {allAPY =allAPY / 100}
+    else if (allAPY > 100) {allAPY = allAPY / 10}
     setLockedAssets(String(cleanDecimal(tlv, 2)));
     setFlashloanAvailable(String(cleanDecimal(tlv * 0.75, 2)));
     setAvgApy(String(cleanDecimal(allAPY, 2)));
